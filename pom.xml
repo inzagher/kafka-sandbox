@@ -16,5 +16,6 @@
 
     <modules>
         <module>kafka-sandbox-producer</module>
+        <module>kafka-sandbox-consumer</module>
     </modules>
 </project>
