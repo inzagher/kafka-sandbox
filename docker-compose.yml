@@ -1,6 +1,27 @@
 version: "3.8"
 
 services:
+  consumer:
+    build: ./kafka-sandbox-consumer
+    image: "inzagher/kafka-sandbox-consumer"
+    container_name: "kafka-sandbox-consumer"
+    environment:
+      - "SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka-sandbox-broker:9092"
+      - "SPRING_KAFKA_CONSUMER_GROUP_ID=gid-1"
+    depends_on:
+      - "kafka"
+    ports:
+      - "9001:9001"
+  producer:
+    build: ./kafka-sandbox-producer
+    image: "inzagher/kafka-sandbox-producer"
+    container_name: "kafka-sandbox-producer"
+    environment:
+      - "SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka-sandbox-broker:9092"
+    depends_on:
+      - "kafka"
+    ports:
+      - "9000:9000"
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: kafka-sandbox-zookeeper
@@ -9,13 +30,13 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
-
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-sandbox-broker
     depends_on:
-      - zookeeper
+      - "zookeeper"
     ports:
+      - "9092:9092"
       - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
