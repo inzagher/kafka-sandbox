@@ -15,5 +15,6 @@
     </properties>
 
     <modules>
+        <module>kafka-sandbox-producer</module>
     </modules>
 </project>
