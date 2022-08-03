@@ -8,20 +8,18 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class KafkaService {
+public class KafkaProducerService {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void send(Object data) {
+    public void publish(Object data) {
         Message<Object> message = MessageBuilder
                 .withPayload(data)
                 .setHeader(KafkaHeaders.TOPIC, "t-1")
                 .build();
-        log.info("Sending message: " + data);
+        log.info("Publishing message: " + data);
         kafkaTemplate.send(message);
     }
 }
